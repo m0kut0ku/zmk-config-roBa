@@ -1,3 +1,83 @@
 # zmk-config-roBa
 
-<img src="keymap-drawer/roBa.svg" >
+Windows・US配列・Microsoft IME向けのキーマップです。日本語文章、TypeScript / JavaScript、Markdown、シェル入力を想定しています。roBa v2、トラックボールあり、ロータリーエンコーダーなしの構成で使います。
+
+![キーマップ](keymap-drawer/roBa.svg)
+
+## 基本操作
+
+文字はQWERTYです。文字キーの長押し兼用と同時押しコンボは使いません。
+
+親指キーは、キーボードを上から見て左から次の順序です。SpaceとEnterは専用キーです。
+
+| 位置 | 短押し | 200 ms以上の長押し |
+| --- | --- | --- |
+| 左・外側 | IME OFF | NUM（数字） |
+| 左・中央 | Space | Space |
+| 左・内側 | IME ON | SYM（記号） |
+| 右・内側 | Backspace | NAV（移動） |
+| 右・外側 | Enter | Enter |
+
+長押し中だけレイヤーが有効になります。短押し優先の判定なので、レイヤーのキーは親指キーを200 ms以上押してから入力します。長押しではIME切替やBackspaceを送りません。
+
+左下の3キーは左からCtrl・Win・Altです。左手の内側は上がTab、下がShift、右手の内側は上がEsc、下がスクロールキーです。右下端はDeleteです。Shift + TabやCtrl + Cなどは専用修飾キーと組み合わせます。
+
+## 記号と数字
+
+SYMは左・内側の親指キーを長押しして使います。各行は文字キーの上段・中段・下段に対応します。
+
+| 段 | 左手：左から順 | 右手：左から順 |
+| --- | --- | --- |
+| 上段 | `` ` ``　`~`　`$`　`\`　`\|` | `(`　`)`　`[`　`]`　`=` |
+| 中段 | `!`　`&`　`#`　`%`　`^` | `{`　`}`　`<`　`>`　`+` |
+| 下段 | `@`　`_`　`;`　`:`　`?` | `-`　`*`　`/`　`"`　`'` |
+
+NUMは左・外側の親指キーを長押しして使います。最上段は左から `1 2 3 4 5 | 6 7 8 9 0` です。テンキーのキーコードは使いません。
+
+すべてのレイヤーでSpace・Enterと親指のBackspace／NAV操作を使えます。NUM・NAV・FN・SYSの文字領域で未割り当てのキーは何も送りません。
+
+## 移動
+
+右親指のBackspaceを長押しするとNAVになります。
+
+| 通常の位置 | NAVでの動作 |
+| --- | --- |
+| W / A / S / D | ↑ / ← / ↓ / → |
+| Q / E | Home / End |
+| R / F | Page Up / Page Down |
+| T / G | Ctrl + Home / Ctrl + End |
+| X / V | Ctrl + ← / Ctrl + → |
+| C / B | Delete / Ctrl + Backspace |
+
+Shiftを併用すると範囲選択できます。
+
+## トラックボール
+
+ボールを動かすとMOUSEが自動で有効になり、通常のJ / K / Lが左／中央／右クリックになります。停止後のタイムアウトは既存設定の700 msです。
+
+右手・内側下のスクロールキーを押しながらボールを動かすとスクロールします。記号・数字・移動などの手動レイヤーはMOUSEより優先され、スクロールは最優先です。
+
+## Fキーと接続設定
+
+- NUMを長押ししながら右手・内側上（通常Esc）も押し続けるとFNです。最上段がF1〜F10、通常のA / SがF11 / F12になります。
+- NUMを長押ししながら左手・内側上（通常Tab）も押し続けるとSYSです。通常のY / U / I / O / PでBluetoothプロファイル0〜4を選択します。
+- SYSで右下端のDeleteを押すと、選択中プロファイルのペアリング情報を消去します。
+- SYSで右手・内側下（通常スクロール）を押すと、右側のブートローダーへ入ります。
+
+## WindowsとMicrosoft IME
+
+Windows側のハードウェアキーボードレイアウトは英語（US、101/102キー）にし、日本語入力にはMicrosoft IMEを使います。記号はUS配列を前提にしています。
+
+IME OFFは`LANG2`、IME ONは`LANG1`を送ります。これはMicrosoftが定義する専用のIME OFF／ONキーです。「無変換／変換」をIME切替に再割り当てする方式ではありません。対応WindowsとMicrosoft IMEで、OFFは半角英数、ONはひらがな入力にします。
+
+参考：[MicrosoftのIME ON／OFFキー仕様](https://learn.microsoft.com/en-us/windows-hardware/design/component-guidelines/keyboard-japan-ime)。実機では、IME OFFを繰り返しても英数、IME ONを繰り返してもひらがなになることを確認してください。
+
+## 設定の反映
+
+設定の正本は[`config/roBa.keymap`](config/roBa.keymap)です。GitHub Actionsのビルド後に、対応するUF2を書き込みます。今回の変更では右側のキーマップを更新します。通常のキーマップ変更でペアリング情報を初期化する必要はありません。
+
+ビルド・書き込みの手順は[ファームウェアのビルド](docs/build.md)を参照してください。エンコーダーなしの設定は左右に含まれるため、このハードウェア設定も反映する場合は左右それぞれのUF2を書き込みます。
+
+ZMK Studioで編集した保存済みキーマップがある場合、書き込み後にStudioの「Restore Stock Settings」でファイル側の配列に戻してください。Studio側の編集内容は失われます。参考：[ZMK Studio](https://zmk.dev/docs/features/studio)。
+
+書き込み後は、メモ帳などでSpace・Enter、親指の短押しと長押し、`1`〜`0`、記号30種類、矢印と範囲選択、ボールのクリック／スクロールを確認してください。

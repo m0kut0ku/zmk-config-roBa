@@ -1,0 +1,8 @@
+parse_config:
+  raw_binding_map:
+    "&kp LANG1": IME ON
+    "&kp LANG2": IME OFF
+    "&mkp MB1": Left Click
+    "&mkp MB2": Right Click
+    "&mkp MB3": Middle Click
+    "&bootloader": Bootloader
