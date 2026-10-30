@@ -52,9 +52,9 @@
         sym_layer {
             display-name = "SYM";
             bindings = <
-                &kp GRAVE  &kp TILDE  &kp DOLLAR  &kp BACKSLASH  &kp PIPE  &kp LPAR  &kp RPAR  &kp LBKT  &kp RBKT  &kp EQUAL
-                &kp EXCL  &kp AMPS  &kp HASH  &kp PERCENT  &kp CARET  &trans  &trans  &kp LBRC  &kp RBRC  &kp LT  &kp GT  &kp PLUS
-                &kp AT  &kp UNDER  &kp SEMI  &kp COLON  &kp QMARK  &trans  &trans  &kp MINUS  &kp ASTERISK  &kp SLASH  &kp DQT  &kp SQT
+                &kp EXCL  &kp AT  &kp HASH  &kp DOLLAR  &kp PERCENT  &kp CARET  &kp AMPS  &kp ASTERISK  &kp LPAR  &kp RPAR
+                &kp GRAVE  &kp SEMI  &kp COLON  &kp SQT  &kp DQT  &trans  &trans  &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT  &kp BACKSLASH
+                &kp TILDE  &kp LT  &kp GT  &kp SLASH  &kp QMARK  &trans  &trans  &kp UNDER  &kp PLUS  &kp LBRC  &kp RBRC  &kp PIPE
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
