@@ -59,7 +59,9 @@ Shiftを併用すると範囲選択できます。
 
 ## トラックボール
 
-ボールを動かすとMOUSEが自動で有効になり、通常のJ / K / Lが左／中央／右クリックになります。停止後のタイムアウトは既存設定の700 msです。
+ボールを動かすとMOUSEが自動で有効になり、通常のJ / K / Lが左／中央／右クリックになります。停止後700 msで解除されます。自動切替はZMK標準の[Temporary Layer Input Processor](https://v0-3-branch.zmk.dev/docs/keymaps/input-processors/temp-layer)を使い、`config/roBa.keymap`の`&zip_temp_layer MOUSE 700`で対象レイヤーとタイムアウトを設定します。ドライバー側の`automouse-layer`は`0`で無効にしています。
+
+キー入力後300 ms以内は、ボールから入力が届いてもMOUSEを新たに有効にしません。有効中に通常キーを押すとMOUSEを解除しますが、J / K / L、Shift、スクロール、Ctrl / Win / Altは解除対象から除外しています。除外キーを押しても700 msのタイムアウトは延長されません。これらは`&zip_temp_layer`の`require-prior-idle-ms`と`excluded-positions`で設定しています。
 
 右手・内側下のスクロールキーを押しながらボールを動かすとスクロールします。記号・数字・移動などの手動レイヤーはMOUSEより優先され、スクロールは最優先です。
 
