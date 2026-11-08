@@ -1,4 +1,4 @@
-layout: {qmk_info_json: config/roBa.json}
+layout: {zmk_keyboard: roBa}
 layers:
   BASE:
   - Q
