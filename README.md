@@ -1,91 +1,126 @@
 # zmk-config-roBa
 
-Windows・US配列・Microsoft IME向けのキーマップです。日本語文章、TypeScript / JavaScript、Markdown、シェル入力を想定しています。roBa v2、トラックボールあり、ロータリーエンコーダーなしの構成で使います。
+Windows・US配列・Microsoft IME向けのキーマップです。roBa v2、トラックボールあり、ロータリーエンコーダーなしの構成で使います。
+
+[kumamuk-gitの元配列](https://github.com/kumamuk-git/zmk-config-roBa/blob/main/config/roBa.keymap)に合わせた、左手テンキー・右手記号・左手矢印の構成です。QWERTY、独立したIME OFF／ON、Lの右のマイナス、Ctrl／Win／Altと親指キーの基本位置、J／K／Lのマウスクリックを維持しています。
 
 ![キーマップ](keymap-drawer/roBa.svg)
 
-## 基本操作
+## 通常入力と長押し
 
-文字はQWERTYです。文字キーの長押し兼用と同時押しコンボは使いません。
+左下の3キーは左からCtrl・Win・Altです。親指キーは、キーボードを上から見て左から次の順序です。
 
-通常レイヤーのLの右隣は`-`です。Shiftとの組み合わせで`_`を入力できます。引用符`'`と`"`はSYMのF/G位置にあります。
-
-親指キーは、キーボードを上から見て左から次の順序です。SpaceとEnterは専用キーです。
-
-| 位置 | 短押し | 200 ms以上の長押し |
+| 位置 | 短押し | 長押し |
 | --- | --- | --- |
-| 左・外側 | IME OFF | NUM（数字） |
-| 左・中央 | Space | Space |
-| 左・内側 | IME ON | SYM（記号） |
-| 右・内側 | Backspace | NAV（移動） |
-| 右・外側 | Enter | Enter |
+| 左・外側 | IME OFF | SYS（接続設定） |
+| 左・中央 | Space | NUM（数字・記号） |
+| 左・内側 | IME ON | NAV（移動） |
+| 右・内側 | Backspace | Backspace |
+| 右・外側 | Enter | FN（Fキー） |
 
-長押し中だけレイヤーが有効になります。短押し優先の判定なので、レイヤーのキーは親指キーを200 ms以上押してから入力します。長押しではIME切替やBackspaceを送りません。
+SpaceとEnterは元配列と同じ長押し兼用です。レイヤー長押しの判定時間は200 msで、長押しではSpace・Enter・IME切替を送りません。Backspaceは専用キーに戻しています。
 
-左下の3キーは左からCtrl・Win・Altです。左手の内側は上がTab、下がShift、右手の内側は上がEsc、下がスクロールキーです。右下端はDeleteです。Shift + TabやCtrl + Cなどは専用修飾キーと組み合わせます。
+Zは短押しでZ、長押しでShiftです。Iは短押しでI、長押しでスクロールです。右下端はDeleteです。
 
-## 記号と数字
+内側のキーは次の配置です。
 
-SYMは左・内側の親指キーを長押しして使います。各行は文字キーの上段・中段・下段に対応します。
+| 位置 | 通常入力 |
+| --- | --- |
+| 左・内側上 | Win + Shift + S |
+| 左・内側下 | `:` |
+| 右・内側上 | `'`（Shiftで`"`） |
+| 右・内側下 | `;` |
+
+Lの右は引き続き`-`で、Shiftとの組み合わせで`_`です。元配列のL右の引用符と右内側上のマイナスを交換しています。
+
+## コンボ
+
+元配列の同時押しを通常層だけに設定しています。数字・移動などの手動レイヤーでは発動しません。
+
+| 同時に押すキー | 出力 |
+| --- | --- |
+| S + D | Tab |
+| D + F | Shift + Tab |
+| A + S | IME OFF |
+| L + `-` | `"` |
+| C + V | `=` |
+
+IME OFFコンボも親指と同じLANG2を送ります。元配列の無変換キーや、通常層へ強制移動するマクロは使いません。
+
+## 数字と記号
+
+Spaceを長押しするとNUMです。左手は元配列と同じテンキー型です。
 
 | 段 | 左手：左から順 | 右手：左から順 |
 | --- | --- | --- |
-| 上段 | `!`　`@`　`#`　`$`　`%` | `^`　`&`　`*`　`(`　`)` |
-| 中段 | `` ` ``　`;`　`:`　`'`　`"` | `-`　`=`　`[`　`]`　`\` |
-| 下段 | `~`　`<`　`>`　`/`　`?` | `_`　`+`　`{`　`}`　`\|` |
+| 上段 | `-`　7　8　9　`+` | `^`　`&`　`~`　`(`　`)` |
+| 中段 | `/`　4　5　6　`*` | `!`　`@`　`#`　`$`　`%` |
+| 下段 | 0／Shift　1　2　3　`.` | `[`　`]`　`{`　`}`　`\\` |
 
-[CorneのQMK標準キーマップ](https://github.com/qmk/qmk_firmware/blob/f5db962110615fd263c3ebf9f0402e7c2b08fbe4/keyboards/crkbd/keymaps/default/keymap.c)を参考にした、roBaの5列向けの配置です。上段はNUMの`1`〜`0`をUS配列でShift入力した記号と同じ位置になります。右手の中段・下段は`-/_`、`=/+`、`[/{`、`]/}`、`\`と`|`が上下で対応します。
+NUMの左内側上はCtrl + Alt + テンキー0、左内側下は`=`、右内側上は`_`、右下端は`|`です。
 
-Corneの右手6列目にあるバッククォートとチルダは、左手のA/Z位置へ移しました。その他の左手の空きにはセミコロン・コロン、引用符、比較記号などを配置しています。Corne標準の完全コピーではなく、左親指によるSYM呼び出しや専用Space・EnterはこのroBa設定を維持します。比較の経緯は[調査メモ](docs/research/2026-10-31-symbol-layout-comparison.md)を参照してください。
+数字は通常の数字キーではなく`KP_NUMBER_*`を送ります。Windowsで数字として使う際はNumLockをオンにしてください。数字が移動キーとして動く場合はWindows側でNumLockの状態を確認します。
 
-NUMは左・外側の親指キーを長押しして使います。最上段は左から `1 2 3 4 5 | 6 7 8 9 0` です。テンキーのキーコードは使いません。
-
-すべてのレイヤーでSpace・Enterと親指のBackspace／NAV操作を使えます。NUM・NAV・FN・SYSの文字領域で未割り当てのキーは何も送りません。
+以前の独立したSYMレイヤーは廃止しています。引用符・コロン・セミコロン・マイナス・カンマ・ピリオド・スラッシュは通常層、その他の記号は主にNUMで入力します。
 
 ## 移動
 
-右親指のBackspaceを長押しするとNAVになります。
+IME ONを長押しするとNAVです。
 
 | 通常の位置 | NAVでの動作 |
 | --- | --- |
-| W / A / S / D | ↑ / ← / ↓ / → |
-| Q / E | Home / End |
-| R / F | Page Up / Page Down |
-| T / G | Ctrl + Home / Ctrl + End |
-| X / V | Ctrl + ← / Ctrl + → |
-| C / B | Delete / Ctrl + Backspace |
+| E | ↑ |
+| S / D / F | ← / ↓ / → |
+| A / G | Home / End |
+| Q | Esc |
+| W / R | Ctrl + Shift + Tab / Ctrl + Tab |
+| Z | Shift |
+| X / V | Win + Shift + ← / Win + Shift + → |
 
-Shiftを併用すると範囲選択できます。
-
-## トラックボール
-
-ボールを動かすとMOUSEが自動で有効になり、通常のJ / K / Lが左／中央／右クリックになります。停止後700 msで解除されます。自動切替はZMK標準の[Temporary Layer Input Processor](https://v0-3-branch.zmk.dev/docs/keymaps/input-processors/temp-layer)を使い、`config/roBa.keymap`の`&zip_temp_layer MOUSE 700`で対象レイヤーとタイムアウトを設定します。ドライバー側の`automouse-layer`は`0`で無効にしています。
-
-キー入力後300 ms以内は、ボールから入力が届いてもMOUSEを新たに有効にしません。有効中に通常キーを押すとMOUSEを解除しますが、J / K / L、Shift、スクロール、Ctrl / Win / Altは解除対象から除外しています。除外キーを押しても700 msのタイムアウトは延長されません。これらは`&zip_temp_layer`の`require-prior-idle-ms`と`excluded-positions`で設定しています。
-
-右手・内側下のスクロールキーを押しながらボールを動かすとスクロールします。記号・数字・移動などの手動レイヤーはMOUSEより優先され、スクロールは最優先です。
+ZのShiftや専用Ctrlと組み合わせて範囲選択・単語移動もできます。以前のWASD型矢印、Page Up／Down専用割り当ては元配列に合わせて変更しています。
 
 ## Fキーと接続設定
 
-- NUMを長押ししながら右手・内側上（通常Esc）も押し続けるとFNです。最上段がF1〜F10、通常のA / SがF11 / F12になります。
-- NUMを長押ししながら左手・内側上（通常Tab）も押し続けるとSYSです。通常のY / U / I / O / PでBluetoothプロファイル0〜4を選択します。
-- SYSで右下端のDeleteを押すと、選択中プロファイルのペアリング情報を消去します。
-- SYSで右手・内側下（通常スクロール）を押すと、右側のブートローダーへ入ります。
+Enterを長押しするとFNです。
+
+- Y／U／I／O／PがF1〜F5、H／J／K／L／`-`がF6〜F10です。
+- スラッシュ位置がF11、右下端のDelete位置がF12です。
+- 右内側上がF13です。
+
+IME OFFを長押しするとSYSです。
+
+- Y／U／I／O／PでBluetoothプロファイル0〜4を選択します。
+- X／C／Vは通常の数字1／2／3です。
+- スラッシュ位置で選択中プロファイルのペアリング情報を消去します。
+- 右下端のDelete位置で全プロファイルのペアリング情報を消去します。
+- 右内側下で右側のブートローダーへ入ります。
+
+## トラックボール
+
+ボールを動かすとMOUSEが自動で有効になり、J／K／Lが左／中央／右クリックになります。停止後700 msで解除されます。文字入力後300 ms以内はMOUSEを新たに有効にしません。
+
+自動切替は従来どおりZMK標準の[Temporary Layer Input Processor](https://v0-3-branch.zmk.dev/docs/keymaps/input-processors/temp-layer)を使います。ドライバー側の`automouse-layer`は0で無効にしています。
+
+MOUSE中の通常キー押下でMOUSEを解除しますが、I／スクロール、J／K／L、Z／Shift、Ctrl／Win／Altは除外しています。除外キーを押しても700 msのタイムアウトは延長されません。Shiftの位置は旧配列の左内側下からZへ、スクロールの入口は右内側下からIへ移しています。
+
+Iを長押ししながらボールを動かすとスクロールします。手動レイヤーはMOUSEより優先され、SCROLLは最優先です。マウスクリックの配置、自動切替の待ち時間・解除条件の基本動作は維持しています。
 
 ## WindowsとMicrosoft IME
 
 Windows側のハードウェアキーボードレイアウトは英語（US、101/102キー）にし、日本語入力にはMicrosoft IMEを使います。記号はUS配列を前提にしています。
 
-IME OFFは`LANG2`、IME ONは`LANG1`を送ります。これはMicrosoftが定義する専用のIME OFF／ONキーです。「無変換／変換」をIME切替に再割り当てする方式ではありません。対応WindowsとMicrosoft IMEで、OFFは半角英数、ONはひらがな入力にします。
+IME OFFは`LANG2`、IME ONは`LANG1`を送ります。元配列の変換／無変換ではなく、Microsoftの専用IME OFF／ONキーです。[MicrosoftのIME ON／OFFキー仕様](https://learn.microsoft.com/en-us/windows-hardware/design/component-guidelines/keyboard-japan-ime)
 
-参考：[MicrosoftのIME ON／OFFキー仕様](https://learn.microsoft.com/en-us/windows-hardware/design/component-guidelines/keyboard-japan-ime)。実機では、IME OFFを繰り返しても英数、IME ONを繰り返してもひらがなになることを確認してください。
+## 設定の反映と確認
 
-## 設定の反映
+設定の正本は[config/roBa.keymap](config/roBa.keymap)です。ビルド・書き込みの手順は[ファームウェアのビルド](docs/build.md)を参照してください。通常のキーマップ変更では右側のUF2を更新し、ペアリング情報を初期化する必要はありません。
 
-設定の正本は[`config/roBa.keymap`](config/roBa.keymap)です。GitHub Actionsのビルド後に、対応するUF2を書き込みます。今回の変更では右側のキーマップを更新します。通常のキーマップ変更でペアリング情報を初期化する必要はありません。
+ZMK Studioで編集した保存済みキーマップがある場合、書き込み後にStudioの「Restore Stock Settings」でファイル側の配列に戻してください。Studio側の編集内容は失われます。[ZMK Studio](https://zmk.dev/docs/features/studio)
 
-ビルド・書き込みの手順は[ファームウェアのビルド](docs/build.md)を参照してください。エンコーダーなしの設定は左右に含まれるため、このハードウェア設定も反映する場合は左右それぞれのUF2を書き込みます。
+書き込み後は次を確認してください。
 
-ZMK Studioで編集した保存済みキーマップがある場合、書き込み後にStudioの「Restore Stock Settings」でファイル側の配列に戻してください。Studio側の編集内容は失われます。参考：[ZMK Studio](https://zmk.dev/docs/features/studio)。
-
-書き込み後は、メモ帳などでSpace・Enter、親指の短押しと長押し、`1`〜`0`、記号30種類、矢印と範囲選択、ボールのクリック／スクロールを確認してください。
+- IME OFF／ON、Space／Enterの短押しと長押し、Backspaceの連続入力。
+- Zの短押し／Shift、Iの短押し／スクロール。
+- NumLockをオンにしたテンキー入力、記号、Tabなどのコンボ。
+- NAVの矢印・範囲選択、F1〜F12。
+- 自動MOUSEのJ／K／Lクリック、Shift＋クリック、文字入力への復帰。
